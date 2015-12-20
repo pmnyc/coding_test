@@ -11,8 +11,6 @@ The minimum number of jumps to reach the last index is 2. (Jump 1 step from
 index 0 to 1, then 3 steps to the last index.)
 """
 
-A= [2,2,3,1,1,4]
-
 
 def possisbleJump(cand, A):
     cache = {}
@@ -38,6 +36,7 @@ def possisbleJump(cand, A):
                 res = min(res, 1 + minsteps)
             counter += 1
         return res
-            
+
+A= [2,2,3,1,1,4]
 possisbleJump(0, A)
                 
