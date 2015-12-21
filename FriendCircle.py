@@ -13,6 +13,24 @@ otherwise not. You have to print the total number of friend circles in the class
 """
 
 
+import numpy as np
+
+def merge2list(a,b):
+     x = np.unique(a+b)
+     x.sort()
+     return list(x)
+
+def getDuplicateEle(x):
+    # x= [[1,2],[2,3],[4]]
+    out = []
+    res = []
+    for a in x:
+        out += a
+    for a in set(out):
+        if out.count(a) > 1:
+            res += [a]
+    return res
+    
 def inputData(M):
     out = []
     for m in M:
@@ -39,24 +57,46 @@ def isComplete(circles):
                 break
     return res
 
+def addOneFriend(x,M):
+    # x = [0,1]
+    if type(M[0]) is not list:
+        M = inputData(M)
+    people = range(len(M))
+    rest_people = list(np.setdiff1d(people, x))
+    res = x + []
+    for p in x:
+        for r in rest_people:
+            if M[p][r] == 'Y':
+                res += [r]
+                break
+    return res
 
-    
-    
-    
+def findCircles(M):
+    if type(M[0]) is not list:
+        M = inputData(M)
+    people = range(len(M))
+    circles = []
+    while len(people) > 0:
+        p = people[0]
+        circle = [p]
+        for i in range(len(people)-1):
+            circle_ = addOneFriend(circle,M)
+            if circle_ != circle:
+                circle = circle_
+            else:
+                break
+        circles.append(circle)
+        visited = []
+        for c in circles:
+            visited += c
+        people = list(np.setdiff1d(people, visited))
+    return circles
 
 
-
-M =['YNNNN',
-'NYNNN',
-'NNYNN',
-'NNNYN',
-'NNNNY']
-
-FriendCircle(M)
 
 M = ['YYNN',
 'YYYN',
 'NYYN',
 'NNNY']
 
-FriendCircle(M)
+findCircles(M)
