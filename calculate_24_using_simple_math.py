@@ -67,7 +67,7 @@ def cal24_v1(q, a, cache={}):
                     cache[(q_, a/v)] = cal24_v1(q_, a/v, cache=cache)
                 if cache.get((q_, a/v)) is not None:
                     cache[(q, a)] = "(" + cache[(q_, a/v)] + " * " + str(v) + ")"
-            if cache.get((q, a)) is None:
+            if cache.get((q, a)) is None and abs(a)>1e-6:
                 if (q_, v/a) not in cache:
                     cache[(q_, v/a)] = cal24_v1(q_, v/a, cache=cache)
                 if cache.get((q_, v/a)) is not None:
@@ -77,7 +77,7 @@ def cal24_v1(q, a, cache={}):
 
 
 def solution(q, a):
-    res = cal24_v1(q, a)
+    res = cal24_v1(q, a, cache={}) # clear the cache
     if res:
         if res.startswith("("):
             res = res[1:-1]
@@ -88,3 +88,5 @@ def solution(q, a):
 solution(q=(1,5,5,5), a=24)
 
 solution(q=(2,2,13,13), a=24)
+
+solution(q=(2,2,13,13,22,22,20,12,23,231,1,32,43,34), a=24)
