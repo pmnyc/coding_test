@@ -11,8 +11,15 @@ It needs Python 3
 """
 
 
+def equivalent(a, b):
+    if abs(a-b) < 1e-8:
+        return True
+    else:
+        return False
+
+
 def solution(q, a, cache={}):
-    a = round(a, 8)
+    a = round(a, 10)
     if len(q) <=1:
         if q[0] == a:
             cache[(q,a)] = str(a)
@@ -21,17 +28,17 @@ def solution(q, a, cache={}):
         return cache[(q, a)]
     elif len(q)==2:
         m1,m2 = q[0], q[1]
-        if m1+m2==a:
+        if equivalent(m1+m2, a):
             cache[(q,a)] = "("+str(m2)+ "+"+ str(m1)+")"
-        elif m2-m1==a:
+        elif equivalent(m2-m1, a):
             cache[(q,a)] = "("+str(m2)+ "-"+ str(m1)+")"
-        elif m1-m2==a:
+        elif equivalent(m1-m2, a):
             cache[(q,a)] = "("+str(m1)+ "-"+ str(m2)+")"
-        elif m2/m1==a:
+        elif equivalent(m2/m1, a):
             cache[(q,a)] = "("+str(m2)+ "/"+ str(m1)+")"
-        elif m1/m2==a:
+        elif equivalent(m1/m2, a):
             cache[(q,a)] = "("+str(m1)+ "/"+ str(m2)+")"
-        elif m2*m1==a:
+        elif equivalent(m2*m1, a):
             cache[(q,a)] = "("+str(m2)+ "*"+ str(m1)+")"
         else:
             cache[(q,a)] = None
@@ -75,3 +82,4 @@ def solution(q, a, cache={}):
 
 
 solution(q=(1,5,5,5), a=24)
+solution(q=(2,2,13,13), a=24)
